@@ -2,7 +2,7 @@ To run:
     python bb_pb.py
 
 A live camera view will display, with a small inset showing a zoomed-in view of the image center, which will hopefully help with focusing (let me know if it doesn't).
-The preview resolution is low to make the live feed smoother; if you need higher resolution, you cam increase preview_res to (1440, 1080), but the feed will be choppy.
+The preview resolution is low to make the live feed smoother; if you prefer higher resolution, you cam increase preview_res to (1280, 960) or (1440, 1080), but the feed will be choppier.
 
 Press 'c' to capture or 'q' to quit. 
 

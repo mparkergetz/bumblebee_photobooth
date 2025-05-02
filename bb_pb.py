@@ -16,6 +16,8 @@ def main(output_dir, preview_res=(800, 600), still_res=(4056, 3040)):
     )
 
     win = "Bee Cam Preview"
+    bee_num = None
+    bee_label = None
 
     try:
         while True:
@@ -24,6 +26,7 @@ def main(output_dir, preview_res=(800, 600), still_res=(4056, 3040)):
             # picam2.set_controls({"AeEnable": True, "AwbEnable": True})
             cv2.namedWindow(win, cv2.WINDOW_NORMAL)
             cv2.setWindowProperty(win, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
 
             while True:
                 frame = picam2.capture_array("main")
@@ -51,8 +54,9 @@ def main(output_dir, preview_res=(800, 600), still_res=(4056, 3040)):
                 key = cv2.waitKey(1) & 0xFF
 
                 if key == ord('c'):
-                    ts = time.strftime("%Y%m%d-%H%M%S")
-                    tmp_path = os.path.join(output_dir, f"tmp_{ts}.jpg")
+                    ts = time.strftime("%Y%m%d%H%M%S")
+                    tmp_path = os.path.join(output_dir, f"{ts}.jpg")
+
                     picam2.switch_mode_and_capture_file(still_config, tmp_path)
                     picam2.stop()
                     cv2.destroyWindow(win)
@@ -106,13 +110,25 @@ def main(output_dir, preview_res=(800, 600), still_res=(4056, 3040)):
                         if key2 == ord('k'):
                             cv2.destroyWindow(win2)
                             time.sleep(0.1)
-                            final_name = input("Enter new filename (no extension) or press Enter to keep existing filename:\n> ").strip()
-                            if final_name:
-                                final_path = os.path.join(output_dir, final_name + ".jpg")
-                                os.replace(tmp_path, final_path)
-                                print(f"Saved as {final_path}")
+                            if bee_num is None:
+                                bee_num = input("Enter bee number\n> ").strip()
                             else:
-                                print(f"Kept as {tmp_path}")
+                                print(f'Current bee_num: {bee_num}')
+                            if bee_label is None:
+                                bee_label = input("Enter bee label\n> ").strip()
+                            else:
+                                print(f'Current bee_label: {bee_label}')
+                            orientation = input("Enter orientation\n> ")
+                            final_name = f'bee{bee_num}_{bee_label}_{orientation}_{ts}'
+                            final_path = os.path.join(output_dir, final_name + ".jpg")
+                            os.replace(tmp_path, final_path)
+                            print(f"Saved as {final_path}")
+                            new_bee = input(f'Continue with bee {bee_num} [y/n]?\n> ').strip()
+                            if new_bee == 'y':
+                                break
+                            else: 
+                                bee_num = None
+                                bee_label = None
                             break
 
                         elif key2 == ord('r'):
