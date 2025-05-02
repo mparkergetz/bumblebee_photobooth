@@ -1,3 +1,5 @@
+** Be sure to set preview_res (line 7) to the resolution of whatever monitor is in use **
+
 To run:
     python bb_pb.py
 
