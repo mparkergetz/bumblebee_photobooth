@@ -4,7 +4,7 @@ import time
 import cv2
 from picamera2 import Picamera2
 
-def main(output_dir, preview_res=(1440, 1080), still_res=(4056, 3040)):
+def main(output_dir, preview_res=(800, 600), still_res=(4056, 3040)):
     os.makedirs(output_dir, exist_ok=True)
 
     picam2 = Picamera2()
